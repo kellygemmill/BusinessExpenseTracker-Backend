@@ -1,28 +1,69 @@
 package com.kellygemmill.expensetracker.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
 import java.util.UUID;
 
+@Entity(name = "Customer")
+@Table(
+        name = "customer",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "customer_email_unique", columnNames = "email"),
+                @UniqueConstraint(name = "customer_phone_unique", columnNames = "phone_number")
+        }
+)
 public class Customer {
 
+    @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(
+            name = "id",
+            updatable = false
+    )
     private UUID id;
-    private String name;
+
+    @Column(
+            name = "first_name",
+            nullable = false,
+            columnDefinition = "TEXT"
+    )
+    private String firstName;
+
+    @Column(
+            name = "last_name",
+            columnDefinition = "TEXT"
+    )
+    private String lastName;
+
+    @Column(
+            name = "email",
+            columnDefinition = "TEXT"
+    )
     private String email;
+
+    @Column(
+            name = "phone_number"
+    )
     private String phoneNumber;
 
-    public Customer(@JsonProperty("id") UUID id,
-                    @JsonProperty("name") String name,
+    public Customer(@JsonProperty("firstName") String firstName,
+                    @JsonProperty("lastName") String lastName,
                     @JsonProperty("email") String email,
                     @JsonProperty("phone") String phoneNumber) {
-        this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
 
-    public Customer(UUID id, Customer customer) {
-        this(id, customer.getName(), customer.getEmail(), customer.getPhoneNumber());
+    public Customer() {
+
     }
 
     public UUID getId() {
@@ -33,12 +74,20 @@ public class Customer {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -56,4 +105,16 @@ public class Customer {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
+
 }

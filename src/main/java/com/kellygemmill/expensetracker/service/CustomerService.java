@@ -1,42 +1,36 @@
 package com.kellygemmill.expensetracker.service;
 
-import com.kellygemmill.expensetracker.dao.CustomerDao;
-import com.kellygemmill.expensetracker.model.Customer;
+import com.kellygemmill.expensetracker.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class CustomerService {
 
-    private final CustomerDao customerDao;
+    private final CustomerRepository customerRepository;
 
     @Autowired
-    public CustomerService(@Qualifier("fake") CustomerDao customerDao) {
-        this.customerDao = customerDao;
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
     }
 
-    public int insertCustomer(Customer customer) {
-        return customerDao.insertCustomer(customer);
-    }
-
-    public List<Customer> getAllCustomers() {
-        return customerDao.selectAllCustomers();
-    }
-
-    public Optional<Customer> getCustomerById(UUID id) {
-        return customerDao.selectCustomerById(id);
-    }
-
-    public int deleteCustomerById(UUID id) {
-        return customerDao.deleteCustomerById(id);
-    }
-
-    public int updateCustomerById(UUID id, Customer newCustomer) {
-        return customerDao.updateCustomerById(id, newCustomer);
-    }
+//    public int insertCustomer(Customer customer) {
+//        return dataAccessObject.insertNew(customer);
+//    }
+//
+//    public List<Customer> getAllCustomers() {
+//        return dataAccessObject.selectAllCustomers();
+//    }
+//
+//    public Optional<Customer> getCustomerById(UUID id) {
+//        return dataAccessObject.selectCustomerById(id);
+//    }
+//
+//    public int deleteCustomerById(UUID id) {
+//        return dataAccessObject.deleteCustomerById(id);
+//    }
+//
+//    public int updateCustomerById(UUID id, Customer newCustomer) {
+//        return dataAccessObject.updateCustomerById(id, newCustomer);
+//    }
 }

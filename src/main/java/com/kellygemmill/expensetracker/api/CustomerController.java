@@ -5,6 +5,8 @@ import com.kellygemmill.expensetracker.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,29 +22,29 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @PostMapping
-    public void insertCustomer(@RequestBody Customer customer) {
-        customerService.insertCustomer(customer);
-    }
-
-    @GetMapping
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
-    }
-
-    @GetMapping(path = "{id}")
-    public Customer getCustomerById(@PathVariable("id") UUID id) {
-        return customerService.getCustomerById(id) // getCustomerById returns an Optional<Customer>
-                .orElse(null);
-    }
-
-    @DeleteMapping(path = "{id}")
-    public void deleteCustomerById(@PathVariable("id") UUID id) {
-        customerService.deleteCustomerById(id);
-    }
-
-    @PutMapping(path = "{id}")
-    public void updatePersonById(@PathVariable("id") UUID id, @RequestBody Customer customerToUpdate) {
-        customerService.updateCustomerById(id, customerToUpdate);
-    }
+//    @PostMapping
+//    public void insertCustomer(@Valid @NotNull @RequestBody Customer customer) {
+//        customerService.insertCustomer(customer);
+//    }
+//
+//    @GetMapping
+//    public List<Customer> getAllCustomers() {
+//        return customerService.getAllCustomers();
+//    }
+//
+//    @GetMapping(path = "{id}")
+//    public Customer getCustomerById(@PathVariable("id") UUID id) {
+//        return customerService.getCustomerById(id) // getCustomerById returns an Optional<Customer>
+//                .orElse(null);
+//    }
+//
+//    @DeleteMapping(path = "{id}")
+//    public void deleteCustomerById(@PathVariable("id") UUID id) {
+//        customerService.deleteCustomerById(id);
+//    }
+//
+//    @PutMapping(path = "{id}")
+//    public void updatePersonById(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Customer customerToUpdate) {
+//        customerService.updateCustomerById(id, customerToUpdate);
+//    }
 }
